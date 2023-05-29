@@ -1,4 +1,7 @@
-import Container from "../container/container"
+import Container from "../container"
+import Categories from "./Categories"
+import Search from "./Search"
+import UserMenu from "./UserMenu"
 import Logo from "./logo"
 
 function Navbar() {
@@ -8,10 +11,13 @@ function Navbar() {
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
             <Logo />
+            <Search />
+            <UserMenu />
           </div>
         </Container>
 
       </div>
+      <Categories />
     </div>
   )
 }
