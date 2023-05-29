@@ -14,7 +14,7 @@ import ListingCategory from "./ListingCategory";
 interface ListingInfoProps {
   user: any
   description: string;
-  details: any[]
+  details: any
   category?: {
     icon: IconType,
     label: string;
@@ -60,7 +60,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             font-light
             text-neutral-500
           "
-        >{details?.map(item => (
+        >{details?.map((item: any) => (
           <div key={item.type}>
             {item.value} {item.type}
           </div>))}

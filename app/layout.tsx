@@ -5,6 +5,8 @@ import Navbar from './components/navbar/navbar'
 import './globals.css'
 import SearchModal from './modals/SearchModal'
 
+export const dynamic = 'force-dynamic'
+
 
 const inter = Inter({ subsets: ['latin'] })
 

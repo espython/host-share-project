@@ -1,15 +1,16 @@
 'use client'
+export const dynamic = 'force-dynamic'
 import { Suspense, use } from "react";
 import ClientOnly from "./components/ClientOnly";
 import Container from "./components/container";
 import getListings, { IListingsParams } from "./api/getListings";
 import EmptyState from "./components/EmptyState";
-import dynamic from "next/dynamic";
+import * as NextDynamic from "next/dynamic";
 import SkeletonImgLoading from "./components/SkeletonImgLoading";
 
-import { usePathname } from "next/navigation";
 
-const WithCustomLoading = dynamic(
+
+const WithCustomLoading = NextDynamic.default(
   () => import("./components/Listings/ListingCard"),
   {
     loading: () => <div className="p-0"><SkeletonImgLoading /></div>,
