@@ -11,10 +11,11 @@ interface IParams {
   id?: string;
 }
 
-const ListingPage = async ({ params }: { params: IParams }) => {
+const ListingPage = ({ params }: { params: IParams }) => {
   const data = use(dataPromise)
-  console.log("params", params)
-  const listing = useMemo(() => { return data.data?.find(item => item.info.id === params.id) }, [params.id]);
+  const id = params?.id
+
+  const listing = useMemo(() => { return data.data?.find(item => item.info.id === id) }, [id]);
 
 
   if (!listing) {

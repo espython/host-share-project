@@ -14,6 +14,12 @@ import ListingInfo from "@/app/components/Listings/ListingInfo";
 import ListingHead from "@/app/components/Listings/ListingHead";
 import ListingReservation from "@/app/components/Listings/ListingReservation";
 import ClientOnly from "@/app/components/ClientOnly";
+import { GiMountainRoad } from "react-icons/gi";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import('../../components/Map'), {
+  ssr: false
+});
 
 const initialDateRange = {
   startDate: new Date(),
@@ -30,6 +36,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   listing
 
 }) => {
+  const cats = use(dataPromise)
 
   const router = useRouter();
   const data = use(dataPromise)
@@ -61,6 +68,13 @@ const ListingClient: React.FC<ListingClientProps> = ({
     }
   }, [dateRange, listing.info.price]);
 
+  const categoryData = useMemo(() => {
+    if (!listing.category) {
+      return { title: "Country Side" }
+    }
+    return cats?.categories?.find(item => item.id === listing.category)
+  }, [listing.category])
+
   return (
     <ClientOnly>
 
@@ -80,21 +94,39 @@ const ListingClient: React.FC<ListingClientProps> = ({
             />
             <div
               className="
-            grid 
-            grid-cols-1 
-            md:grid-cols-7 
-            md:gap-10 
-            mt-6
+              grid 
+              grid-cols-2
+              md:grid-cols-10
+              md:gap-8
+              mt-6
             "
             >
               <ListingInfo
+                category={{ icon: GiMountainRoad, label: categoryData?.title as string, description: "Amazing house with Great facilities" }}
                 description={listing.info.description}
-                roomCount={listing.info.amenities.count}
-                guestCount={listing.info.details.count}
-                bathroomCount={listing.info.details.count}
-                locationValue={listing.info.location.address}
+                details={listing.info.details.data}
+                locationValue={listing.info.location.city}
                 user={listing.info.host}
               />
+              <div
+                className="
+                order-first 
+                mb-10 
+                md:order-last 
+                md:col-span-4
+              "
+              >
+                <ListingReservation
+                  price={listing.info.price}
+                  totalPrice={totalPrice}
+                  onChangeDate={(value) => setDateRange(value)}
+                  dateRange={dateRange}
+                  onSubmit={() => { }}
+                  disabled={isLoading}
+                  disabledDates={[]}
+                />
+                <div className="pt-8"><Map center={[listing.info.location.lat, listing.info.location.long]} /></div>
+              </div>
 
             </div>
           </div>

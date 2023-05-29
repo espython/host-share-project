@@ -1,21 +1,38 @@
 'use client'
-import { use } from "react";
+import { Suspense, use } from "react";
 import ClientOnly from "./components/ClientOnly";
 import Container from "./components/container";
-import { dataPromise } from "./components/navbar/Categories";
-import ListingCard from "./components/Listings/ListingCard";
+import getListings, { IListingsParams } from "./api/getListings";
+import EmptyState from "./components/EmptyState";
+import dynamic from "next/dynamic";
+import SkeletonImgLoading from "./components/SkeletonImgLoading";
+
+import { usePathname } from "next/navigation";
+
+const WithCustomLoading = dynamic(
+  () => import("./components/Listings/ListingCard"),
+  {
+    loading: () => <div className="p-0"><SkeletonImgLoading /></div>,
+  },
+);
 
 
 
+interface HomeProps {
+  searchParams: IListingsParams
+};
+const dataPromise = async (searchParams: any) => getListings(searchParams)
 
-export default function Home(props: any) {
-  const data = use(dataPromise)
+export default async function Home({ searchParams }: HomeProps) {
+  const listings = await dataPromise(searchParams);
+
 
   return (
 
     <ClientOnly>
+
       <Container>
-        <div
+        {listings?.length > 0 ? <div
           className="
             pt-24
             grid 
@@ -28,14 +45,15 @@ export default function Home(props: any) {
             gap-8
           "
         >
-          {data?.data?.map((listing: any, i) => (
-            <ListingCard
-              key={i}
-              data={listing}
-            />
-          ))}
-        </div>
+          <Suspense fallback="...loading">
+            {listings.map((listing: any, i: number) => (
+              <WithCustomLoading data={listing} key={i} />
+            ))}
+
+          </Suspense>
+        </div> : <EmptyState />}
       </Container>
+
     </ClientOnly>
 
   )

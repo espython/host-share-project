@@ -14,9 +14,11 @@
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "country-state-city": "^3.1.4",
     "date-fns": "^2.30.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "framer-motion": "^10.12.16",
     "leaflet": "^1.9.4",
     "next": "13.4.4",
     "postcss": "8.4.23",
@@ -27,9 +29,11 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
+    "react-select": "^5.7.3",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
-    "world-countries": "^4.0.0"
+    "world-countries": "^4.0.0",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.8.0",

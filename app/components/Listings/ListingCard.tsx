@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { use, useCallback, useMemo } from "react";
-import { format } from 'date-fns';
+import { HiStar } from "react-icons/hi"
 
 import useCountries from "@/app/hooks/useCountries";
 import {
@@ -41,7 +41,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const { getByValue } = useCountries();
   const cats = use(dataPromise)
 
-  const location = getByValue(data.info.location.country.code);
+  const location = getByValue(data.info.location.city);
   const category = useMemo(() => { return cats?.categories?.find(item => item.id === data.category) }, [data.category])
 
   const handleCancel = useCallback(
@@ -98,11 +98,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
             />
           </div>
         </div>
-        <div className="font-semibold text-lg">
-          {location?.region}, {location?.label}
+        <div className="font-semibold text-lg flex justify-between">
+          <div>{location?.region}, {location?.label}</div>
+          <div className="flex flex-row items-center font-normal text-base"><HiStar />{data.info.ratings.value}</div>
         </div>
         <div className="font-light text-neutral-500">
-          {category?.title || "Unknown"}
+          {category?.title || "Amazing house"}
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">

@@ -21,7 +21,7 @@ function Categories() {
   const isMainPage = pathName === "/"
 
 
-  console.log("category", category)
+
   const categorieswithIcons = useMemo(() => {
     let categories = data?.categories?.slice(1, 8);
     return categories?.map((item: CategoriesEntity) => {

@@ -1,7 +1,10 @@
+
 import { Inter } from 'next/font/google'
 import ClientOnly from './components/ClientOnly'
 import Navbar from './components/navbar/navbar'
 import './globals.css'
+import SearchModal from './modals/SearchModal'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +18,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClientOnly><Navbar /></ClientOnly>
+
+
+        <ClientOnly><Navbar /><SearchModal /></ClientOnly>
         <div className='pb-20 pt-28'>
           {children}
         </div>
+
+
+
+
+
       </body>
     </html>
   )

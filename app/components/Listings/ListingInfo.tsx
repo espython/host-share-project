@@ -8,16 +8,13 @@ import useCountries from "@/app/hooks/useCountries";
 import Avatar from "../navbar/Avatar";
 import ListingCategory from "./ListingCategory";
 
-const Map = dynamic(() => import('../Map'), {
-  ssr: false
-});
+
+
 
 interface ListingInfoProps {
   user: any
   description: string;
-  guestCount: number;
-  roomCount: number;
-  bathroomCount: number;
+  details: any[]
   category?: {
     icon: IconType,
     label: string;
@@ -29,18 +26,18 @@ interface ListingInfoProps {
 const ListingInfo: React.FC<ListingInfoProps> = ({
   user,
   description,
-  guestCount,
-  roomCount,
-  bathroomCount,
   category,
   locationValue,
+  details
 }) => {
+
   const { getByValue } = useCountries();
 
   const coordinates = getByValue(locationValue)?.latlng
 
+  console.log("coordinates", locationValue)
   return (
-    <div className="col-span-7 flex flex-col gap-8">
+    <div className="col-span-6 flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <div
           className="
@@ -63,16 +60,10 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             font-light
             text-neutral-500
           "
-        >
-          <div>
-            {guestCount} guests
-          </div>
-          <div>
-            {roomCount} rooms
-          </div>
-          <div>
-            {bathroomCount} bathrooms
-          </div>
+        >{details?.map(item => (
+          <div key={item.type}>
+            {item.value} {item.type}
+          </div>))}
         </div>
       </div>
       <hr />
@@ -89,7 +80,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         {description}
       </div>
       <hr />
-      <Map center={coordinates} />
+
     </div>
   );
 }
